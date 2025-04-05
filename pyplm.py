@@ -3194,9 +3194,8 @@ def builtin_shr(node, left):
         warning("SHR arg 2 overflow")
     label1 = new_label()
     emit_label(label1)
-    g_code.append("STC")
-    g_code.append("CMC")
-    g_pc += 2
+    g_code.append("ORA A  ; clear carry")
+    g_pc += 1
     if leftWidth == 2:
         g_code.append("MOV A,D")
         g_code.append("RAR")
@@ -3226,12 +3225,11 @@ def builtin_shl(node, left):
         warning("SHL arg 2 overflow")
     label1 = new_label()
     emit_label(label1)
-    g_code.append("STC")
-    g_code.append("CMC")
+    g_code.append("ORA A  ; clear carry")
     g_code.append("MOV A,E")
     g_code.append("RAL  ; SHL")
     g_code.append("MOV E,A")
-    g_pc += 5
+    g_pc += 4
     if leftWidth == 2:
         g_code.append("MOV A,D")
         g_code.append("RAL")
